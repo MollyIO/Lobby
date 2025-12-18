@@ -4,23 +4,42 @@ namespace Lobby
 {
     public class RestrictionsHandler
     {
-        private bool IsLobby => EventsHandler.IsLobby;
+        private static bool IsLobby => EventsHandler.IsLobby;
 
-        public void OnPlayerInteractingDoor(PlayerInteractingDoorEventArgs ev) => ev.IsAllowed = !IsLobby;
-
-        public void OnPlayerInteractingElevator(PlayerInteractingElevatorEventArgs ev)
+        public static void OnPlayerInteractingDoor(PlayerInteractingDoorEventArgs ev)
         {
-            if (IsLobby) ev.IsAllowed = false;
+            if (IsLobby)
+                ev.IsAllowed = false;
         }
 
-        public void OnPlayerSearchingPickup(PlayerSearchingPickupEventArgs ev) => ev.IsAllowed = !IsLobby;
+        public static void OnPlayerInteractingElevator(PlayerInteractingElevatorEventArgs ev)
+        {
+            if (IsLobby)
+                ev.IsAllowed = false;
+        }
 
-        public void OnPlayerDroppingItem(PlayerDroppingItemEventArgs ev) => ev.IsAllowed = !IsLobby;
+        public static void OnPlayerSearchingPickup(PlayerSearchingPickupEventArgs ev)
+        {
+            if (IsLobby)
+                ev.IsAllowed = false;
+        }
 
-        public void OnPlayerDroppingAmmo(PlayerDroppingAmmoEventArgs ev) => ev.IsAllowed = !IsLobby;
+        public static void OnPlayerDroppingItem(PlayerDroppingItemEventArgs ev)
+        {
+            if (IsLobby)
+                ev.IsAllowed = false;
+        }
 
-        public void OnPlayerThrowingItem(PlayerThrowingItemEventArgs ev) => ev.IsAllowed = !IsLobby;
+        public static void OnPlayerDroppingAmmo(PlayerDroppingAmmoEventArgs ev)
+        {
+            if (IsLobby)
+                ev.IsAllowed = false;
+        }
 
-        public void OnPlayerUsingIntercom(PlayerUsingIntercomEventArgs ev) => ev.IsAllowed = (IsLobby && !Lobby.Instance.Config.AllowIcom ? false : true);
+        public static void OnPlayerThrowingItem(PlayerThrowingItemEventArgs ev)
+        {
+            if (IsLobby)
+                ev.IsAllowed = false;
+        }
     }
 }

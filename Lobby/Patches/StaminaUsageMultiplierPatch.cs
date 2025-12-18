@@ -6,10 +6,10 @@ namespace Lobby.Patches
     [HarmonyPatch(typeof(Inventory), nameof(Inventory.StaminaUsageMultiplier), MethodType.Getter)]
     public class StaminaUsageMultiplierPatch
     {
-        private static void Postfix(Inventory __instance, ref float __result)
+        private static void Postfix(ref float __result)
         {
-            if (Lobby.Instance.Config.InfinityStamina && EventsHandler.IsLobby)
-                __result = 0;
+            if (Lobby.Instance.Config?.InfiniteStamina == true && EventsHandler.IsLobby)
+                __result = 0f;
         }
     }
 }

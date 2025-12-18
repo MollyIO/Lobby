@@ -7,118 +7,114 @@ namespace Lobby
 {
     public class Config
     {
-        [Description("Main text ({seconds} - Either it shows how much is left until the start, or the server status is \"Server is suspended\", \"Round starting\", <rainbow> - Change the next text a rainbow color, </rainbow> - Close a rainbow color tag)")]
+        [Description("Main text. Use {seconds} for countdown display.")]
         public string TitleText { get; set; } = "<color=#F0FF00><b>Waiting for players, {seconds}</b></color>";
 
-        [Description("Text showing the number of players ({players} - Text with the number of players, <rainbow> - Change the next text a rainbow color, </rainbow> - Close a rainbow color tag)")]
+        [Description("Text showing the number of players. Use {players} for player count.")]
         public string PlayerCountText { get; set; } = "<color=#FFA600><i>{players}</i></color>";
 
-        [Description("What will be written if the lobby is locked?")]
+        [Description("Text displayed when the lobby is locked.")]
         public string ServerPauseText { get; set; } = "Server is suspended";
 
-        [Description("What will be written when there is a second left?")]
+        [Description("Text displayed when there is one second left.")]
         public string SecondLeftText { get; set; } = "{seconds} second left";
 
-        [Description("What will be written when there is more than a second left?")]
+        [Description("Text displayed when there is more than one second left.")]
         public string SecondsLeftText { get; set; } = "{seconds} seconds left";
 
-        [Description("What will be written when the round starts?")]
+        [Description("Text displayed when the round is starting.")]
         public string RoundStartText { get; set; } = "Round starting";
 
-        [Description("What will be written when there is only one player on the server?")]
+        [Description("Text displayed when there is only one player on the server.")]
         public string PlayerJoinText { get; set; } = "player joined";
 
-        [Description("What will be written when there is more than one player on the server?")]
+        [Description("Text displayed when there is more than one player on the server.")]
         public string PlayersJoinText { get; set; } = "players joined";
 
-        [Description("Vertical text position.")]
-        public int VerticalPos { get; set; } = 25;
+        [Description("Vertical text position offset.")]
+        public int VerticalPosition { get; set; } = 25;
 
-        [Description("Top text size")]
-        public int TopTextSize { get; set; } = 50;
+        [Description("Title text size.")]
+        public int TitleTextSize { get; set; } = 50;
 
-        [Description("Bottom text size")]
-        public int BottomTextSize { get; set; } = 40;
+        [Description("Player count text size.")]
+        public int PlayerCountTextSize { get; set; } = 40;
 
-        [Description("Top text size in intercom")]
-        public int TopTextIcomSize { get; set; } = 150;
+        [Description("Enable the movement boost effect.")]
+        public bool MovementBoostEnabled { get; set; } = true;
 
-        [Description("Bottom text size in intercom")]
-        public int BottomTextIcomSize { get; set; } = 140;
-
-        [Description("Enable the movement boost effect?")]
-        public bool EnableMovementBoost { get; set; } = true;
-
-        [Description("What is the movement boost intensity? (Max 255)")]
+        [Description("Movement boost intensity. (Max 255)")]
         public byte MovementBoostIntensity { get; set; } = 50;
 
-        [Description("Will infinity stamina be enabled for people in the lobby?")]
-        public bool InfinityStamina { get; set; } = true;
+        [Description("Enable infinite stamina for players in the lobby.")]
+        public bool InfiniteStamina { get; set; } = true;
 
-        [Description("What role will people play in the lobby?")]
-        public RoleTypeId LobbyPlayerRole { get; set; } = RoleTypeId.Tutorial;
+        [Description("The role players will have in the lobby.")]
+        public List<RoleTypeId> LobbyPlayerRole { get; set; } = new List<RoleTypeId>
+        {
+            RoleTypeId.ClassD,
+            RoleTypeId.Scientist,
+            RoleTypeId.Tutorial,
+            RoleTypeId.NtfSergeant,
+            RoleTypeId.NtfCaptain,
+            RoleTypeId.NtfPrivate,
+            RoleTypeId.NtfSpecialist,
+            RoleTypeId.FacilityGuard,
+            RoleTypeId.ChaosRifleman,
+            RoleTypeId.ChaosMarauder,
+            RoleTypeId.ChaosRepressor,
+            RoleTypeId.ChaosConscript
+        };
 
-        [Description("Allow people to talk over the intercom?")]
-        public bool AllowIcom { get; set; } = true;
-
-        [Description("Display text on Intercom? (Works only when lobby Intercom type)")]
-        public bool DisplayInIcom { get; set; } = true;
-
-        [Description("What size will the text be in the Intercom? (The larger the value, the smaller it will be)")]
-        public int IcomTextSize { get; set; } = 20;
-
-        [Description("What items will be given when spawning a player in the lobby? (Leave blank to keep inventory empty)")]
-        public List<ItemType> LobbyInventory { get; set; } = new List<ItemType>()
+        [Description("Items given to players when spawning in the lobby. Leave empty for no items.")]
+        public List<ItemType> LobbyInventory { get; set; } = new List<ItemType>
         {
             ItemType.Coin
         };
 
-        [Description("In what locations can people spawn? (If this parameter is empty, one of the custom locations (or custom room locations) will be selected)")]
-        public List<LobbyLocationType> LobbyLocation { get; set; } = new List<LobbyLocationType>()
+        [Description("Available spawn locations. If empty, a random custom location will be selected.")]
+        public List<LobbyLocationType> SpawnLocations { get; set; } = new List<LobbyLocationType>
         {
-            LobbyLocationType.Tower_1,
-            LobbyLocationType.Tower_2,
-            LobbyLocationType.Tower_3,
-            LobbyLocationType.Tower_4,
-            LobbyLocationType.Tower_5,
-            LobbyLocationType.Intercom,
-            LobbyLocationType.GR18,
-            LobbyLocationType.SCP173
+            LobbyLocationType.Tower1,
+            LobbyLocationType.Tower2,
+            LobbyLocationType.Tower3,
+            LobbyLocationType.Tower4,
+            LobbyLocationType.Tower5,
+            LobbyLocationType.GlassRoom,
+            LobbyLocationType.Scp173
         };
 
-        [Description("This option is for a custom lobby location")]
-        public List<CustomRoomLocationData> CustomRoomLocations { get; set; } = new List<CustomRoomLocationData>()
+        [Description("Custom room-based spawn locations.")]
+        public List<CustomRoomLocationData> CustomRoomLocations { get; set; } = new List<CustomRoomLocationData>
         {
-            new CustomRoomLocationData()
+            new CustomRoomLocationData
             {
-                RoomNameType = RoomName.EzGateA.ToString(),
-                OffsetX = 0,
-                OffsetY = 1,
-                OffsetZ = 0,
-                RotationX = 0,
-                RotationY = 0,
-                RotationZ = 0,
-            },
+                RoomNameType = nameof(RoomName.EzGateA),
+                OffsetX = 0f,
+                OffsetY = 1f,
+                OffsetZ = 0f,
+                RotationX = 0f,
+                RotationY = 0f,
+                RotationZ = 0f
+            }
         };
 
-        [Description("This option is for a custom lobby location")]
-        public List<CustomLocationData> CustomLocations { get; set; } = new List<CustomLocationData>()
+        [Description("Custom world-position spawn locations.")]
+        public List<CustomLocationData> CustomLocations { get; set; } = new List<CustomLocationData>
         {
-            new CustomLocationData()
+            new CustomLocationData
             {
                 PositionX = 39.262f,
                 PositionY = 315f,
                 PositionZ = -31.844f,
-                RotationX = 0,
-                RotationY = 0,
-                RotationZ = 0,
-            },
+                RotationX = 0f,
+                RotationY = 0f,
+                RotationZ = 0f
+            }
         };
     }
 
-    public class LocationData
-    {
-    }
+    public abstract class LocationData { }
 
     public class CustomRoomLocationData : LocationData
     {
